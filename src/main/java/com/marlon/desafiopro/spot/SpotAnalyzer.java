@@ -97,11 +97,7 @@ public class SpotAnalyzer {
 						processPoint(position);
 						continue;
 					}else{
-						if(currentSpot>biggestSpot) {
-							this.biggestSpot = currentSpot;
-						}
-						
-						this.currentSpot = 1;
+						processBiggestSpot();
 					}
 					
 					entity.addNumberSpots();
@@ -117,6 +113,14 @@ public class SpotAnalyzer {
 		return entity;
 		
 		
+	}
+
+	private void processBiggestSpot() {
+		if(currentSpot>biggestSpot) {
+			this.biggestSpot = currentSpot;
+		}
+		
+		this.currentSpot = 1;
 	}
 
 	private void averageCalc() {
