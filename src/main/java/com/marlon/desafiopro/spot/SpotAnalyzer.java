@@ -82,6 +82,9 @@ public class SpotAnalyzer {
 				position.setY(y);
 				
 				if(verifyPoint(position)) {
+					
+					if(this.currentSpot==0) this.currentSpot++;
+					
 					entity.addTotalArea();
 					
 					Boolean isSameSpot = 
@@ -98,7 +101,7 @@ public class SpotAnalyzer {
 							this.biggestSpot = currentSpot;
 						}
 						
-						this.currentSpot = 0;
+						this.currentSpot = 1;
 					}
 					
 					entity.addNumberSpots();
@@ -107,7 +110,7 @@ public class SpotAnalyzer {
 			
 		}
 		
-		if(this.biggestSpot>0) this.entity.setBiggestArea(this.biggestSpot+1);
+		this.entity.setBiggestArea(this.biggestSpot);
 		
 		averageCalc();
 

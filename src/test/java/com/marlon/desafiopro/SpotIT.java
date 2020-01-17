@@ -75,6 +75,22 @@ public class SpotIT {
 		assertThat(entity.getAverageArea().doubleValue(), is(BigDecimal.ZERO.doubleValue()));
 		assertThat(entity.getBiggestArea(), is(0));
 	}
+	
+	@Test
+	public void oneSpot() {
+					
+		Response response = doRequestPost("/json/one_spot.json");
+		
+		assertThat(response.getStatus(), is(Status.OK.getStatusCode()));
+			
+		SpotResponse entity = response.readEntity(SpotResponse.class);
+		
+		assertNotNull(entity);
+		assertThat(entity.getTotalArea(), is(1));
+		assertThat(entity.getNumberSpots(), is(1));
+		assertThat(entity.getAverageArea().doubleValue(), is(BigDecimal.ONE.doubleValue()));
+		assertThat(entity.getBiggestArea(), is(1));
+	}
 
 	
 	@Test 
