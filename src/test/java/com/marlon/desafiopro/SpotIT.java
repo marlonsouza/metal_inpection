@@ -72,8 +72,8 @@ public class SpotIT {
 		assertNotNull(entity);
 		assertThat(entity.getTotalArea(), is(0));
 		assertThat(entity.getNumberSpots(), is(0));
-		assertThat(entity.getAverageArea(), is(BigDecimal.ZERO));
-		assertThat(entity.getBiggestArea(), is(BigDecimal.ZERO));
+		assertThat(entity.getAverageArea().doubleValue(), is(BigDecimal.ZERO.doubleValue()));
+		assertThat(entity.getBiggestArea(), is(0));
 	}
 
 	
@@ -95,6 +95,8 @@ public class SpotIT {
 		assertNotNull(entity);
 		assertThat(entity.getTotalArea(), is(8));
 		assertThat(entity.getNumberSpots(), is(2));
+		assertThat(entity.getAverageArea().doubleValue(), is(BigDecimal.valueOf(4).doubleValue()));
+		assertThat(entity.getBiggestArea(), is(4));
 		
 		response = doRequestPost("/json/matriz_valid2.json");
 		
@@ -103,6 +105,8 @@ public class SpotIT {
 		assertNotNull(entity);
 		assertThat(entity.getTotalArea(), is(5));
 		assertThat(entity.getNumberSpots(), is(3));
+		assertThat(entity.getAverageArea(), is(BigDecimal.valueOf(1.66667)));
+		assertThat(entity.getBiggestArea(), is(3));
 		
 	}
 	 

@@ -1,5 +1,7 @@
 package com.marlon.desafiopro.spot;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,8 @@ public class SpotAnalyzer {
 	private SpotResponse entity;
 	private JsonArray toAnalyse;
 	private List<List<Integer>> transformedList;
+	private Integer biggestSpot;
+	private Integer currentSpot;
 	
 	
 	public static SpotAnalyzer create(JsonArray toAnalyse) {
@@ -24,8 +28,10 @@ public class SpotAnalyzer {
 		return mySelf;
 	}
 	
-	private void makeZero(Position position) {
+	private void processPoint(Position position) {
 		this.transformedList.get(position.getX()).set(position.getY(), 0);
+		
+		this.currentSpot ++;
 	}
 	
 	private Boolean verifyPoint(Position position) {
@@ -63,6 +69,9 @@ public class SpotAnalyzer {
 				
 		position.setSizeX(toAnalyse.size());
 		
+		this.biggestSpot = 0;
+		this.currentSpot = 0;
+		
 		for(Integer x = 0; x < position.getSizeX(); x++) {
 			
 			position.setX(x);
@@ -82,8 +91,14 @@ public class SpotAnalyzer {
 								.anyMatch(pos -> verifyPoint(pos));		
 			
 					if(isSameSpot) {
-						makeZero(position);
+						processPoint(position);
 						continue;
+					}else{
+						if(currentSpot>biggestSpot) {
+							this.biggestSpot = currentSpot;
+						}
+						
+						this.currentSpot = 0;
 					}
 					
 					entity.addNumberSpots();
@@ -92,9 +107,25 @@ public class SpotAnalyzer {
 			
 		}
 		
+		if(this.biggestSpot>0) this.entity.setBiggestArea(this.biggestSpot+1);
+		
+		averageCalc();
+
 		return entity;
 		
 		
+	}
+
+	private void averageCalc() {
+		if(entity.getNumberSpots()>0 && entity.getTotalArea()>0) {
+			
+			BigDecimal totalArea = BigDecimal.valueOf(entity.getTotalArea());
+			BigDecimal numeberSpots = BigDecimal.valueOf(entity.getNumberSpots());
+			BigDecimal average = totalArea.divide(numeberSpots, 5, RoundingMode.HALF_UP);
+			
+			entity.setAverageArea(average);
+			
+		}
 	}
 	
 }

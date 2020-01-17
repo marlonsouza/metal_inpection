@@ -7,7 +7,7 @@ public class SpotResponse {
 	private Integer totalArea;
 	private Integer numberSpots;
 	private BigDecimal averageArea;
-	private BigDecimal biggestArea;
+	private Integer biggestArea;
 	
 	public SpotResponse() {
 	}
@@ -18,7 +18,7 @@ public class SpotResponse {
 		instance.numberSpots = 0;
 		instance.totalArea = 0;
 		instance.averageArea = BigDecimal.valueOf(0);
-		instance.biggestArea = BigDecimal.valueOf(0);
+		instance.biggestArea = 0;
 		
 		return instance;
 	
@@ -48,11 +48,11 @@ public class SpotResponse {
 		this.averageArea = averageArea;
 	}
 	
-	public BigDecimal getBiggestArea() {
+	public Integer getBiggestArea() {
 		return biggestArea;
 	}
 	
-	public void setBiggestArea(BigDecimal biggestArea) {
+	public void setBiggestArea(Integer biggestArea) {
 		this.biggestArea = biggestArea;
 	}
 	
